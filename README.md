@@ -61,13 +61,15 @@ Quries like:
 
 Compare the stock prices of Nvidia and AMD in the past month.
 
-![Comparison Chart Example](./data/comparison_chart.png)
+[![Comparison Chart Example](./data/comparison_chart.png)](https://www.linkedin.com/in/nanshendata/)
 
 How's Tesla stock like in the past 3 months?
 
-![Candlestick Chart Example](./data/price_chart_candlestick.png)
+[![Candlestick Chart Example](./data/price_chart_candlestick.png)](https://www.linkedin.com/in/nanshendata/)
 
 Plot the trading opportunities of NiSource Inc in the past 3 months.
+
+[![Trading Opportunity Example](./data/trading_opportunities.png)](https://www.linkedin.com/in/nanshendata/)
 
 ## Contact & Contributing
 - Issues and pull requests are welcome!
