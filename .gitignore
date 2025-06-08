@@ -10,8 +10,7 @@ venv/
 # macOS system files
 .DS_Store
 
-# Data and logs
-data/
+# Logs
 logs/
 
 # Jupyter Notebook checkpoints
