@@ -54,6 +54,7 @@ This project is a **Model Concept Protocol (MCP) server** designed to enable LLM
     }  
     ```   
 'tradersis-mcp' should now be listed in your Claude tools.
+
 2. **Start talking with your trading assistant!** 
 Quries like:
 Compare the stock prices of Novo Nordisk and Eli Lilly in the past month.
