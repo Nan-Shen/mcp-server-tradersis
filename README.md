@@ -19,7 +19,7 @@ This project is a **Model Concept Protocol (MCP) server** designed to enable LLM
 ## Installation
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Nan-Shen/mcp-server-tradersis.git
    cd <your-repo-folder>
    ```
 2. **Set up a Python virtual environment**
@@ -54,6 +54,11 @@ This project is a **Model Concept Protocol (MCP) server** designed to enable LLM
     }  
     ```   
 'tradersis-mcp' should now be listed in your Claude tools.
+2. **Start talking with your trading assistant!** 
+Quries like:
+Compare the stock prices of Novo Nordisk and Eli Lilly in the past month.
+How's Tesla stock like in the past 3 months?
+Plot the trading opportunities of NiSource Inc in the past 3 months.
 
 ## Contact & Contributing
 - Issues and pull requests are welcome!
