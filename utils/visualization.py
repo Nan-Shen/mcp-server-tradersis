@@ -4,7 +4,6 @@ import os
 import base64
 from io import BytesIO
 import pandas as pd
-from utils.retrieve_data import fetch_stock_data
 from utils.calculate_metrics import calculate_trading_opportunities
 
 def plot_price_chart(prices: list, chart_type: str = 'line', title: str = 'Price Chart', filename: str = None) -> dict:
@@ -116,7 +115,7 @@ def plot_comparison_chart(dates: list, series: dict, title: str = 'Comparison Ch
         f.write(base64.b64decode(img_base64))
     return {'file_path': filename, 'base64': img_base64}
 
-def plot_trading_opportunities(prices: list, short_window: int, long_window: int, title: str = 'Trading Opportunities') -> dict:
+def plot_trading_opportunities(prices: list, short_window: int=9, long_window: int=21, title: str = 'Trading Opportunities') -> dict:
     """
     Plots price data with trading signals/opportunities. Create signals based on crossovers:
     - A 'Golden Cross' (bullish signal) occurs when the short-term MA crosses above the long-term MA.

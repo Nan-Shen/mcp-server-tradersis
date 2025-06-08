@@ -50,13 +50,13 @@ def mcp_plot_comparison_chart(dates: list, series: dict, title: str = 'Compariso
     return plot_comparison_chart(dates, series, title, filename) 
 
 @mcp.tool()
-def mcp_plot_trading_opportunities(prices: list, short_window: int, long_window: int, title: str = 'Trading Opportunities') -> dict:
+def mcp_plot_trading_opportunities(prices: list, short_window: int=9, long_window: int=21, title: str = 'Trading Opportunities') -> dict:
     """
     Plots price data with trading signals/opportunities.
     Args:
         prices: List of dicts with OHLCV and date.
-        short_window: Short window for the short moving average.
-        long_window: Long window for the long moving average.
+        short_window: Short window for the short moving average. Default is 9.
+        long_window: Long window for the long moving average. Default is 21.
         title: Chart title.
     Returns:    
         Dict with 'file_path' and 'base64' of the image.
