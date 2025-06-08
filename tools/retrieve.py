@@ -59,12 +59,13 @@ def retrieve_ticker_info(ticker: str) -> dict:
     return get_ticker_info(ticker)
 
 @mcp.tool()
-def retrieve_financial_statements(ticker: str) -> dict:
+def retrieve_financial_statements(ticker: str, indicator: str) -> dict:
     """
-    Retrieves the annual financial statements, balance sheet, and cash flow for the given ticker.
+    Retrieves the annual income statements, balance sheet, or cash flow for the given ticker. 
     Args:
         ticker: The ticker symbol of the stock to retrieve the statements for.
+        indicator: The type of financial statement to retrieve. e.g. "income_statement", "balance_sheet", "cash_flow"
     Returns:
-        A JSON-serializable dict with financial statements, balance sheet, and cash flow.
+        A JSON-serializable dict with income statements, balance sheet, or cash flow.
     """
-    return get_financial_statements(ticker)
+    return get_financial_statements(ticker, indicator)

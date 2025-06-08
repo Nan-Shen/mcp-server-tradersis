@@ -115,21 +115,21 @@ def extract_value(financial_data: dict, key: str, preferred_sources: list) -> fl
 def calculate_financial_metric(financial_data: dict, indicator: str) -> dict:
     """
     Calculates a specified financial metric from the provided data. The metrics are:
-    - gross_margin
-    - operating_margin
-    - net_profit_margin
-    - ebitda
-    - debt_to_equity
-    - current_ratio
-    - quick_ratio
-    - book_value_per_share
-    - free_cash_flow
-    - cash_flow_margin
-    - roe
-    - roa
-    - pe_ratio
-    - pb_ratio
-    - dividend_yield
+    - gross_margin (need retrieve income_statement)
+    - operating_margin (need retrieve income_statement)
+    - net_profit_margin (need retrieve income_statement)
+    - ebitda (need retrieve income_statement)
+    - debt_to_equity (need retrieve balance_sheet)
+    - current_ratio (need retrieve balance_sheet)
+    - quick_ratio (need retrieve balance_sheet)
+    - book_value_per_share (need retrieve balance_sheet)
+    - free_cash_flow (need retrieve cash_flow)
+    - cash_flow_margin (need retrieve cash_flow)
+    - roe (need retrieve income_statement and balance_sheet)
+    - roa (need retrieve income_statement and balance_sheet)
+    - pe_ratio (need retrieve income_statement and market)
+    - pb_ratio (need retrieve income_statement and market)
+    - dividend_yield (need retrieve income_statement and market)
     Args:
         financial_data: dict (flat or nested)
         indicator: str, one of the supported metric names

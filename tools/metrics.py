@@ -30,24 +30,24 @@ def mcp_calculate_technical_indicators(price_data: list, indicator: str, window:
     return calculate_technical_indicators(price_data, indicator, window)
 
 @mcp.tool()
-def mcp_calculate_financial_metrics(financial_data: dict, indicator: str, window: int = 14) -> dict:
+def mcp_calculate_financial_metrics(financial_data: dict, indicator: str) -> dict:
     """
     Calculates financial metrics from the provided data. The metrics are:
-    - gross_margin
-    - operating_margin
-    - net_profit_margin
-    - ebitda
-    - debt_to_equity
-    - current_ratio
-    - quick_ratio
-    - book_value_per_share
-    - free_cash_flow
-    - cash_flow_margin
-    - roe
-    - roa
-    - pe_ratio
-    - pb_ratio
-    - dividend_yield
+    - gross_margin (need retrieve income_statement)
+    - operating_margin (need retrieve income_statement)
+    - net_profit_margin (need retrieve income_statement)
+    - ebitda (need retrieve income_statement)
+    - debt_to_equity (need retrieve balance_sheet)
+    - current_ratio (need retrieve balance_sheet)
+    - quick_ratio (need retrieve balance_sheet)
+    - book_value_per_share (need retrieve balance_sheet)
+    - free_cash_flow (need retrieve cash_flow)
+    - cash_flow_margin (need retrieve cash_flow)
+    - roe (need retrieve income_statement and balance_sheet)
+    - roa (need retrieve income_statement and balance_sheet)
+    - pe_ratio (need retrieve income_statement and market)
+    - pb_ratio (need retrieve income_statement and market)
+    - dividend_yield (need retrieve income_statement and market)
     Args:
         financial_data: Dict with financial data.
         indicator: str, one of the supported metric names
@@ -55,4 +55,4 @@ def mcp_calculate_financial_metrics(financial_data: dict, indicator: str, window
     Returns:
         Dict with financial metrics name as key and value as value. e.g. {'gross_margin': 0.5}
     """
-    return calculate_financial_metric(financial_data, indicator, window)
+    return calculate_financial_metric(financial_data, indicator)

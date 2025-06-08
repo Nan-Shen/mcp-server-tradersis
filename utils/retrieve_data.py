@@ -36,10 +36,15 @@ def fetch_stock_data(ticker_list, start_date, end_date, interval="1d"):
         data = yf.Ticker(ticker).history(start=start_date, end=end_date, interval=interval)
         if not data.empty:
             result[ticker] = data.to_dict(orient="records")
-            # Convert Timestamp to string for JSON serialization
+            # Convert all keys to lower case and Timestamp to string for JSON serialization
             for rec in result[ticker]:
-                if "Date" in rec:
-                    rec["Date"] = str(rec["Date"]) 
+                # Convert keys to lower case
+                rec_keys = list(rec.keys())
+                for k in rec_keys:
+                    rec[k.lower()] = rec.pop(k)
+                # Convert 'date' to string if present
+                if "date" in rec:
+                    rec["date"] = str(rec["date"])
         else:
             result[ticker] = []
     return result
@@ -76,17 +81,19 @@ def get_ticker_info(ticker: str) -> dict:
     }
 
 # financial statements extraction tools
-def get_financial_statements(ticker: str) -> dict:
+def get_financial_statements(ticker: str, indicator: str) -> dict:
     """
-    Fetches the annual financial statements, balance sheet, and cash flow for the given ticker.
+    Fetches the annual income statements, balance sheet, and cash flow for the given ticker.
     """
     stock = yf.Ticker(ticker)
-    statements = stock.financials
-    bs = stock.balance_sheet
-    cf = stock.cashflow
-    return {
-        "financial_statements": statements.to_dict(),
-        "balance_sheet": bs.to_dict(),
-        "cash_flow": cf.to_dict()
-    }
-
+    if indicator == "income_statement":
+        statements = stock.financials
+        return { "income_statement": statements.to_dict()}
+    elif indicator == "balance_sheet":
+        statements = stock.balance_sheet
+        return { "balance_sheet": statements.to_dict()}
+    elif indicator == "cash_flow":
+        statements = stock.cashflow
+        return { "cash_flow": statements.to_dict()}
+    else:
+        return {"error": f"Invalid indicator: {indicator}"}
