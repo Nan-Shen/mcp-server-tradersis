@@ -78,9 +78,8 @@ def calculate_trading_opportunities(prices: list, short_window: int, long_window
     Returns:
         pd.DataFrame with trading opportunities.
     """
-    prices = pd.DataFrame(prices)
-    prices['short_ma'] = prices['Close'].rolling(window=short_window).mean()
-    prices['long_ma'] = prices['Close'].rolling(window=long_window).mean()
+    prices['short_ma'] = prices['close'].rolling(window=short_window).mean()
+    prices['long_ma'] = prices['close'].rolling(window=long_window).mean()
     prices['prev_short'] = prices['short_ma'].shift(1)
     prices['prev_long'] = prices['long_ma'].shift(1)
     prices['signal'] = 0
