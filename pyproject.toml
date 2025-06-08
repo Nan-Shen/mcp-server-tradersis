@@ -1,0 +1,13 @@
+[project]
+name = "trade"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.10.3",
+    "mcp>=1.9.3",
+    "mplfinance>=0.12.10b0",
+    "pandas>=2.3.0",
+    "yfinance>=0.2.61",
+]
