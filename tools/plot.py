@@ -54,7 +54,7 @@ def mcp_plot_trading_opportunities(prices: list, short_window: int=9, long_windo
     """
     Plots price data with trading signals/opportunities.
     Args:
-        prices: List of dicts with OHLCV and date.
+        prices: List of dicts with keys 'date', 'open', 'high', 'low', 'close', 'volume'.
         short_window: Short window for the short moving average. Default is 9.
         long_window: Long window for the long moving average. Default is 21.
         title: Chart title.

@@ -29,41 +29,39 @@ def fetch_stock_data(ticker_list, start_date, end_date, interval="1d"):
         end_date: End date of the data (e.g., '2024-12-31')
         interval: Data interval (e.g., '1d', '1h', '5m', etc.)
     Returns:
-        Dict mapping ticker to its historical data (as a list of dicts).
+        Dict mapping ticker to its historical data in columnar format (dict of lists), e.g. {'date': [...], 'open': [...], ...}.
     """
     result = {}
     for ticker in ticker_list:
         data = yf.Ticker(ticker).history(start=start_date, end=end_date, interval=interval)
         if not data.empty:
-            result[ticker] = data.to_dict(orient="records")
-            # Convert all keys to lower case and Timestamp to string for JSON serialization
-            for rec in result[ticker]:
-                # Convert keys to lower case
-                rec_keys = list(rec.keys())
-                for k in rec_keys:
-                    rec[k.lower()] = rec.pop(k)
-                # Convert 'date' to string if present
-                if "date" in rec:
-                    rec["date"] = str(rec["date"])
+            data = data.reset_index()
+            # Convert all columns to lower case
+            data.columns = [str(col).lower() for col in data.columns]
+            # Convert 'date' column to string for JSON serialization
+            if 'date' in data.columns:
+                data['date'] = data['date'].astype(str)
+            # Convert to dict of lists (columnar format)
+            result[ticker] = {col: data[col].tolist() for col in data.columns}
         else:
-            result[ticker] = []
+            result[ticker] = {}
     return result
 
-def get_dividends(ticker: str) -> dict:
+def get_dividends(ticker: str) -> str:
     """
     Fetches dividends for the given ticker.
     """
     stock = yf.Ticker(ticker)
     dividends = stock.dividends
-    return dividends.to_dict()
+    return dividends.to_json()
 
-def get_splits(ticker: str) -> dict:
+def get_splits(ticker: str) -> str:
     """
     Fetches splits for the given ticker.
     """
     stock = yf.Ticker(ticker)
     splits = stock.splits
-    return splits.to_dict()
+    return splits.to_json()
 
 def get_ticker_info(ticker: str) -> dict:
     """
@@ -81,19 +79,19 @@ def get_ticker_info(ticker: str) -> dict:
     }
 
 # financial statements extraction tools
-def get_financial_statements(ticker: str, indicator: str) -> dict:
+def get_financial_statements(ticker: str, indicator: str) -> str:
     """
     Fetches the annual income statements, balance sheet, and cash flow for the given ticker.
     """
     stock = yf.Ticker(ticker)
     if indicator == "income_statement":
         statements = stock.financials
-        return { "income_statement": statements.to_dict()}
+        return { "income_statement": statements.to_json()}
     elif indicator == "balance_sheet":
         statements = stock.balance_sheet
-        return { "balance_sheet": statements.to_dict()}
+        return { "balance_sheet": statements.to_json()}
     elif indicator == "cash_flow":
         statements = stock.cashflow
-        return { "cash_flow": statements.to_dict()}
+        return { "cash_flow": statements.to_json()}
     else:
         return {"error": f"Invalid indicator: {indicator}"}

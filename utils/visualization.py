@@ -115,31 +115,33 @@ def plot_comparison_chart(dates: list, series: dict, title: str = 'Comparison Ch
         f.write(base64.b64decode(img_base64))
     return {'file_path': filename, 'base64': img_base64}
 
-def plot_trading_opportunities(prices: list, short_window: int=9, long_window: int=21, title: str = 'Trading Opportunities') -> dict:
+def plot_trading_opportunities(prices: dict, short_window: int=9, long_window: int=21, title: str = 'Trading Opportunities') -> dict:
     """
     Plots price data with trading signals/opportunities. Create signals based on crossovers:
     - A 'Golden Cross' (bullish signal) occurs when the short-term MA crosses above the long-term MA.
     - A 'Death Cross' (bearish signal) occurs when the short-term MA crosses below the long-term MA.
     Args:
-        prices: List of dicts with OHLCV and date.
+        prices: Dict of lists (columnar format) with keys 'date', 'open', 'high', 'low', 'close', 'volume'.
         short_window: Short window for the short moving average.
         long_window: Long window for the long moving average.
         title: Chart title.
     Returns:
         Dict with 'file_path' and/or 'base64' of the image.
     """
-    prices = pd.DataFrame(prices)
-    prices = calculate_trading_opportunities(prices, short_window, long_window)
-    buy_signals = prices[prices['signal'] == 1]
-    sell_signals = prices[prices['signal'] == -1]
+    # Convert columnar format to DataFrame
+    prices_df = pd.DataFrame(prices)
+    prices_df['date'] = pd.to_datetime(prices_df['date'])
+    prices_df = calculate_trading_opportunities(prices_df, short_window, long_window)
+    buy_signals = prices_df[prices_df['signal'] == 1]
+    sell_signals = prices_df[prices_df['signal'] == -1]
     fig, ax = plt.subplots(figsize=(10, 5))
-    ax.plot(prices['date'], prices['close'], label='Close Price', color='blue', alpha=0.5)
-    ax.plot(prices['date'], prices['short_ma'], label=f'Short MA ({short_window})', color='orange')
-    ax.plot(prices['date'], prices['long_ma'],  label=f'Long MA ({long_window})', color='magenta')
+    ax.plot(prices_df['date'], prices_df['close'], label='Close Price', color='blue', alpha=0.5)
+    ax.plot(prices_df['date'], prices_df['short_ma'], label=f'Short MA ({short_window})', color='orange')
+    ax.plot(prices_df['date'], prices_df['long_ma'],  label=f'Long MA ({long_window})', color='magenta')
     if not buy_signals.empty:
-        plt.scatter(buy_signals['Date'], buy_signals['Close'], marker='^', color='green', label='Buy Signal', s=100, zorder=5)
+        plt.scatter(buy_signals['date'], buy_signals['close'], marker='^', color='green', label='Buy Signal', s=100, zorder=5)
     if not sell_signals.empty:
-        plt.scatter(sell_signals['Date'], sell_signals['Close'], marker='v', color='red', label='Sell Signal', s=100, zorder=5)
+        plt.scatter(sell_signals['date'], sell_signals['close'], marker='v', color='red', label='Sell Signal', s=100, zorder=5)
     ax.set_title(title)
     ax.set_xlabel('Date')
     ax.set_ylabel('Price')
@@ -151,8 +153,7 @@ def plot_trading_opportunities(prices: list, short_window: int=9, long_window: i
     plt.close(fig)
     buf.seek(0)
     img_base64 = base64.b64encode(buf.read()).decode('utf-8')
-    if not filename:
-        filename = f"./data/trading_opportunities.png"
+    filename = f"./data/trading_opportunities.png"
     with open(filename, 'wb') as f:
         f.write(base64.b64decode(img_base64))
     return {'file_path': filename, 'base64': img_base64}
