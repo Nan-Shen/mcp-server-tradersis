@@ -1,7 +1,7 @@
 # MCP Server for Financial Analysis
 
 ## Introduction
-This project is a **Model Concept Protocol (MCP) server** designed to enable LLMs (such as Claude, Cursor, or GPT-based agents) to retrieve, analyze, and visualize stock prices and financial report data. It provides a set of robust tools for quantitative trading research, investment analysis, and financial education.
+This project is a **Model Context Protocol (MCP) server** designed to enable LLMs (such as Claude, Cursor, or GPT-based agents) to retrieve, analyze, and visualize stock prices and financial report data. It provides a set of robust tools for quantitative trading research, investment analysis, and financial education.
 
 ## Usage Scenarios
 - **LLM-driven trading analysis**: Let LLMs fetch and analyze stock data, financial statements, and technical indicators to generate trading insights.
